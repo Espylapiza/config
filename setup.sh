@@ -11,6 +11,10 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 
 sudo sed -i -e "s_/bin/bash_/bin/zsh_" /etc/passwd
 
+mv ~/.vimrc ~/.vimrc.bak
+mv ~/.tmux.conf ~/.tmux.conf
+mv ~/.zshrc ~/.zshrc.bak
+
 wget "$url/.vimrc" -O ~/.vimrc
 wget "$url/.tmux.conf" -O ~/.tmux.conf
 wget "$url/.zshrc" -O ~/.zshrc
