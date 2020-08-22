@@ -1,5 +1,7 @@
 #!/bin/bash
-sudo apt install zsh
+sudo apt install curl zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 sudo sed -i -e "s_/bin/bash_/bin/zsh_" /etc/passwd
 
 # or replace it with gist url
