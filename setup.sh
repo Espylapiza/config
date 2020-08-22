@@ -17,7 +17,12 @@ sudo sed -i -e "s_/bin/bash_/bin/zsh_" /etc/passwd
 mv ~/.vimrc ~/.vimrc.bak
 mv ~/.tmux.conf ~/.tmux.conf
 mv ~/.zshrc ~/.zshrc.bak
+mkdir -p ~/.ssh
+mv ~/.ssh/config ~/.ssh/config.bak
+
+https://raw.githubusercontent.com/Espylapiza/config/master/.ssh/config
 
 wget "$url/.vimrc" -O ~/.vimrc
 wget "$url/.tmux.conf" -O ~/.tmux.conf
 wget "$url/.zshrc" -O ~/.zshrc
+wget "$url/.ssh/config" -O ~/.ssh/config
