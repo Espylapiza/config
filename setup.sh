@@ -3,7 +3,7 @@
 # or replace it with gist url
 url="https://raw.githubusercontent.com/Espylapiza/config/master"
 
-sudo add-apt-repository -y ppa:x4121/ripgrep
+sudo add-apt-repository ppa:x4121/ripgrep -y
 sudo apt update
 sudo apt install -y curl vim zsh ripgrep
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
