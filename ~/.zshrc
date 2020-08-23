@@ -110,6 +110,7 @@ setopt hist_reduce_blanks # remove superfluous blanks from history items
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias vim="vim"
 alias c="clear"
 alias cp="cp -i"                          # confirm before overwriting something
 alias df="df -h"                          # human-readable sizes

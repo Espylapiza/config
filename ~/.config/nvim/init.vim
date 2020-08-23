@@ -16,54 +16,74 @@ set expandtab
 set clipboard=unnamed
 
 " ====== MS-Windows ======
-behave mswin
-set ve+=onemore
-set backspace=indent,eol,start whichwrap+=<,>,[,]
+"behave mswin
+"set ve+=onemore
+"set backspace=indent,eol,start whichwrap+=<,>,[,]
 
 " backspace for visual mode
-vnoremap <BS> d
+" vnoremap <BS> d
 
 " HOME
-nnoremap <HOME> ^
-inoremap <HOME> <C-O>^
+" nnoremap <HOME> ^
+" inoremap <HOME> <C-O>^
 
 " END
-nnoremap <END> $<Right>
+" nnoremap <END> $<Right>
 
 " Ctrl+HOME
-nnoremap <C-HOME> gg
-inoremap <C-HOME> <C-O>gg
+" nnoremap <C-HOME> gg
+" inoremap <C-HOME> <C-O>gg
 
 " Ctrl+END
-nmap <C-END> G<END>
-imap <C-END> <C-O>G<C-O><END>
+" nmap <C-END> G<END>
+"imap <C-END> <C-O>G<C-O><END>
 
 " select all
-nnoremap <C-A> ggvG$
-inoremap <C-A> <C-O>gg<C-O>vG$
-vnoremap <C-A> <ESC><ESC>ggvG$
+"nnoremap <C-A> ggvG$
+"inoremap <C-A> <C-O>gg<C-O>vG$
+"vnoremap <C-A> <ESC><ESC>ggvG$
 
 " copy
-vnoremap <C-C> "+y
+"vnoremap <C-C> "+y
+"vnoremap <C-S-C> "+y
 
 " paste
-noremap <C-V> "+gP
-inoremap <C-V> <ESC>"+gPi
+"nnoremap <C-V> "+gP
+"nnoremap <C-S-V> "+gP
+"inoremap <C-V> ggcG$
+"inoremap <C-S-V> <C-O>"<C-O>gP
 
 " cut
-vnoremap <C-X> "+c
+"vnoremap <C-X> "+c
 
 " save
-nnoremap <C-S> :w<CR>
-inoremap <C-S> <C-O>:w<CR>
+"nnoremap <C-S> :w<CR>
+"nnoremap <C-S-S> :w<CR>
+"inoremap <C-S> <C-O>:w<CR>
+"inoremap <C-S-S> <C-O>:w<CR>
 
 " undo
-noremap <C-Z> u
-inoremap <C-Z> <C-O>u
+"noremap <C-Z> u
+"inoremap <C-Z> <C-O>u
 
 " redo
-noremap <C-Y> <C-R>
-inoremap <C-Y> <C-O><C-R>
+"noremap <C-Y> <C-R>
+"inoremap <C-Y> <C-O><C-R>
+
+" find
+"nnoremap <C-F> /
+"inoremap <C-F> <C-O>/
+"nnoremap <F3> n
+"inoremap <F3> <C-O>n
+"nnoremap <S-F3> N
+"inoremap <S-F3> <C-O>N
+
+" goto line
+"nnoremap <C-G> :
+"inoremap <C-G> <C-O>:
+
+" exit
+"nnoremap <C-Q> :q
 
 " ====== Custom Configurations ======
 
@@ -101,3 +121,4 @@ endfunction
 
 noremap <F8> :call ToggleTransparent()<CR>
 inoremap <F8> <C-O>:call ToggleTransparent()<CR>
+
