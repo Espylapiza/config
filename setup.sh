@@ -8,8 +8,8 @@ if [ "$EUID" -ne 0 ]
     exit 1
 fi
 
-if [[ "$(command -v apt)" ]]; then
-    INSTALL_COMMAND="apt install -y"
+if [[ "$(command -v apt-get)" ]]; then
+    INSTALL_COMMAND="apt-get install -y"
 elif [[ "$(command -v pacman)" ]]; then
     INSTALL_COMMAND="pacman -S"
 else
