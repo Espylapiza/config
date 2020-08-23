@@ -49,3 +49,8 @@ mkdir -p ~/.ssh
 mv -f ~/.ssh/config ~/.ssh/config.bak
 cp "./~/.ssh/config" ~/.ssh/config
 
+if [[ "$OSTYPE == "darwin*"" ]]; then
+    mkdir -p ~/.config/iterm2
+    mv -f ~/.config/iterm2/com.googlecode.iterm2.plist ~/.config/iterm2/com.googlecode.iterm2.plist.bak
+    cp "./~/.config/iterm2/com.googlecode.iterm2.plist" ~/.ssh/config
+fi

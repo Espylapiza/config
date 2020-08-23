@@ -50,8 +50,8 @@ vnoremap <C-S-C> "+y
 " paste
 nnoremap <C-V> "+gP
 nnoremap <C-S-V> "+gP
-inoremap <C-V> ggcG$
-inoremap <C-S-V> <C-O>"<C-O>gP
+inoremap <C-V> <C-O>"+gP
+inoremap <C-S-V> <C-O>"+gP
 
 " cut
 vnoremap <C-X> "+c
