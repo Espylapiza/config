@@ -1,5 +1,5 @@
 # config
 
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Espylapiza/config/master/setup.sh)"
+git clone --depth 1 https://github.com/Espylapiza/config && cd config && bash setup.sh
 ```
