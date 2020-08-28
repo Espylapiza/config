@@ -30,9 +30,7 @@ vnoremap $ $l
 nnoremap <expr> <Left> col('.')==1?'k$l':'h'
 nnoremap <expr> <BS> col('.')==1?'k$l':'h'
 nnoremap <DEL> <Right>
-
-" backspace for visual mode
-" vnoremap <BS> d
+snoremap <BS> d
 
 " HOME
 nnoremap <HOME> ^
@@ -48,6 +46,23 @@ inoremap <C-HOME> <C-O>gg
 " Ctrl+END
 nnoremap <C-END> G$l
 inoremap <C-END> <C-O>G<END>
+
+" scroll
+noremap <ScrollWheelUp> <C-Y>
+noremap <ScrollWheelDown> <C-E>
+inoremap <ScrollWheelUp> <C-O><C-Y>
+inoremap <ScrollWheelDown> <C-O><C-E>
+nnoremap <M-Up> <C-Y>
+nnoremap <ESC>[1;9A <C-Y>
+"nnoremap <ALT-Down> <C-E>
+"nnoremap <ESC>[1;9B <C-E>
+"map <ESC>[1;9D 3k
+"map <A-J> j
+"map <M-J> j
+"map <ALT-J> j
+"map <ESC><J> j
+"map ∆ j
+"map ^[[1;9B 4j
 
 " fast move
 nnoremap <C-Up> 4k
@@ -119,9 +134,11 @@ vnoremap <C-C> ygv
 
 " paste
 nnoremap <C-V> "+gP
+vnoremap <C-V> <nop>
 " nnoremap <C-S-V> "+gP
 inoremap <C-V> <C-O>"+gP
 " inoremap <C-S-V> <C-O>"+gP
+snoremap <C-V> <C-O>"_d"+gP
 
 " cut
 vnoremap <C-X> "+c
@@ -159,6 +176,80 @@ inoremap <C-G> <C-O>:
 nnoremap <C-Q> :q<CR>
 inoremap <C-Q> <C-O>:q<CR>
 vnoremap <C-Q> <ESC>:q<CR>
+
+let s:smooth_scroll_state = {
+\ 'impulse': 0.0,
+\ 'velocity': 0.0,
+\ 'delta': 0.0,
+\ }
+
+if !exists('g:comfortable_motion_interval')
+    let g:comfortable_motion_interval = 1.0 / 60
+endif
+if !exists('g:comfortable_motion_friction')
+    let g:comfortable_motion_friction = 80.0
+endif
+if !exists('g:comfortable_motion_air_drag')
+    let g:comfortable_motion_air_drag = 2.0
+endif
+
+function! s:tick(timer_id)
+    let l:st = s:smooth_scroll_state  " This is just an alias for the global variable
+    if abs(l:st.velocity) >= 1 || l:st.impulse != 0 " short-circuit if velocity is less than one
+        let l:dt = g:comfortable_motion_interval
+
+        " Compute resistance forces
+        let l:vel_sign = l:st.velocity == 0
+          \            ? 0
+          \            : l:st.velocity / abs(l:st.velocity)
+        let l:friction = -l:vel_sign * g:comfortable_motion_friction * 1  " The mass is 1
+        let l:air_drag = -l:st.velocity * g:comfortable_motion_air_drag
+        let l:additional_force = l:friction + l:air_drag
+
+        " Update the state
+        let l:st.delta += l:st.velocity * l:dt
+        let l:st.velocity += l:st.impulse + (abs(l:additional_force * l:dt) > abs(l:st.velocity) ? -l:st.velocity : l:additional_force * l:dt)
+        let l:st.impulse = 0
+
+        " Scroll
+        let l:int_delta = float2nr(l:st.delta >= 0 ? floor(l:st.delta) : ceil(l:st.delta))
+        let l:st.delta -= l:int_delta
+        if l:int_delta > 0
+            execute "normal! " . string(abs(l:int_delta)) . "\<C-E>"
+        elseif l:int_delta < 0
+            execute "normal! " . string(abs(l:int_delta)) . "\<C-Y>"
+        else
+            " Do nothing
+        endif
+        redraw
+    else
+        " Stop scrolling and the thread
+        let l:st.velocity = 0
+        let l:st.delta = 0
+        call timer_stop(s:timer_id)
+        unlet s:timer_id
+    endif
+endfunction
+
+function SmoothScroll(delta, impulse)
+    if !exists('s:timer_id')
+        let s:timer_id = timer_start(20, function("s:tick"), {'repeat': -1})
+    endif
+    let l:st = s:smooth_scroll_state  " This is just an alias for the global variable
+    if l:st.delta < 0 && a:delta > 0
+        let l:st.delta = a:delta
+    elseif l:st.delta > 0 && a:delta < 0
+        let l:st.delta = a:delta
+    else
+        let l:st.delta += a:delta
+    endif
+    let s:smooth_scroll_state.impulse += a:impulse
+endfunction
+
+"nnoremap <silent> <Down> :call SmoothScroll(10)<CR>
+"nnoremap <silent> <Up> :call SmoothScroll(-10)<CR>
+nnoremap <silent> <PageDown> :call SmoothScroll(20, 100)<CR>
+nnoremap <silent> <PageUp> :call SmoothScroll(-20, -100)<CR>
 
 " ====== Custom Configurations ======
 

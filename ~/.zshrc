@@ -77,12 +77,59 @@ plugins=(
 )
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+export ZSH_AUTOSUGGEST_USE_ASYNC="true"
 
 source $ZSH/oh-my-zsh.sh
 
 setopt no_nomatch
 setopt hist_ignore_all_dups # remove older duplicate entries from history
 setopt hist_reduce_blanks # remove superfluous blanks from history items
+
+# start typing + [Up-Arrow] - fuzzy find history forward
+if [[ "${terminfo[kcuu1]}" != "" ]]; then
+  autoload -U history-substring-search-up
+  zle -N up-line-or-beginning-search
+  bindkey "${terminfo[kcuu1]}" history-substring-search-up
+fi
+# start typing + [Down-Arrow] - fuzzy find history backward
+if [[ "${terminfo[kcud1]}" != "" ]]; then
+  autoload -U history-substring-search-down
+  zle -N down-line-or-beginning-search
+  bindkey "${terminfo[kcud1]}" history-substring-search-down
+fi
+
+# compinit
+autoload -U compinit && (compinit &)
+
+# Ctrl + W
+autoload -U select-word-style
+select-word-style bash
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+#
+# # ex - archive extractor
+# # usage: ex <file>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
 # User configuration
 
@@ -119,55 +166,9 @@ alias xz="xz -T 0"
 alias rcp="rsync -ah --progress"
 alias wget='wget --header="Accept: */*" --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"'
 
-export EDITOR="vim"
+export LC_ALL="en.us"
 export FZF_DEFAULT_COMMAND="rg --hidden --no-ignore --files"
-export ZSH_AUTOSUGGEST_USE_ASYNC="true"
-
-# start typing + [Up-Arrow] - fuzzy find history forward
-if [[ "${terminfo[kcuu1]}" != "" ]]; then
-  autoload -U history-substring-search-up
-  zle -N up-line-or-beginning-search
-  bindkey "${terminfo[kcuu1]}" history-substring-search-up
-fi
-# start typing + [Down-Arrow] - fuzzy find history backward
-if [[ "${terminfo[kcud1]}" != "" ]]; then
-  autoload -U history-substring-search-down
-  zle -N down-line-or-beginning-search
-  bindkey "${terminfo[kcud1]}" history-substring-search-down
-fi
-
-# Ctrl + W
-autoload -U select-word-style
-select-word-style bash
-export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-#
-# # ex - archive extractor
-# # usage: ex <file>
-ex ()
-{
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1     ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-
-# compinit
-autoload -U compinit && (compinit &)
+export EDITOR="vim"
 
 if [[ "$OSTYPE == "darwin*"" ]]; then
     alias locate="mdfind -name"
