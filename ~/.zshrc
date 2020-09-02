@@ -169,7 +169,6 @@ alias wget='wget --header="Accept: */*" --user-agent="Mozilla/5.0 (X11; Linux x8
 export LC_ALL="en_us.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --hidden --no-ignore --files"
 export EDITOR="nvim"
-export PATH=""
 
 if [[ "$OSTYPE == "darwin*"" ]]; then
     alias locate="mdfind -name"
