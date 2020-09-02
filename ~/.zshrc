@@ -166,7 +166,7 @@ alias xz="xz -T 0"
 alias rcp="rsync -ah --progress"
 alias wget='wget --header="Accept: */*" --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"'
 
-export LC_ALL="en_us.UTF-8"
+export LC_ALL="en_US.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --hidden --no-ignore --files"
 export EDITOR="nvim"
 
