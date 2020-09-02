@@ -158,7 +158,7 @@ ex ()
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias vim="nvim"
-alias c="clear"
+alias c="tput reset"
 alias cp="cp -i"                          # confirm before overwriting something
 alias df="df -h"                          # human-readable sizes
 alias top="sudo htop"                     # use htop instead of top
@@ -166,12 +166,20 @@ alias xz="xz -T 0"
 alias rcp="rsync -ah --progress"
 alias wget='wget --header="Accept: */*" --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"'
 
-export LC_ALL="en.us"
+export LC_ALL="en_us.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --hidden --no-ignore --files"
-export EDITOR="vim"
+export EDITOR="nvim"
+export PATH=""
 
 if [[ "$OSTYPE == "darwin*"" ]]; then
     alias locate="mdfind -name"
     export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
     export HOMEBREW_NO_AUTO_UPDATE=1
 fi
+
+if [[ -d "$HOME/anaconda3" ]]; then
+    export PATH="$HOME/anaconda3/bin:$PATH"
+elif [[ -d "$HOME/miniconda3" ]]; then
+    export PATH="$HOME/miniconda3/bin:$PATH"
+fi
+
