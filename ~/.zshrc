@@ -158,7 +158,7 @@ ex ()
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias vim="nvim"
-alias c="tput reset"
+alias c="tmux clear-history && tput reset"
 alias cp="cp -i"                          # confirm before overwriting something
 alias df="df -h"                          # human-readable sizes
 alias top="sudo htop"                     # use htop instead of top
