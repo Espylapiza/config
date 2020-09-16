@@ -20,8 +20,8 @@ else
 fi
 
 if [[ "$(command -v apt-get)" ]]; then
-    add-apt-repository -y ppa:x4121/ripgrep
-    apt update
+    sudo add-apt-repository -y ppa:x4121/ripgrep
+    sudo apt update
 fi
 
 $INSTALL_COMMAND curl git neovim zsh ripgrep
