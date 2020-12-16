@@ -26,14 +26,17 @@ fi
 
 $INSTALL_COMMAND curl git neovim zsh ripgrep
 
+mv -f ~/.oh-my-zsh ~/.oh-my-zsh.bak
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --all
 
-sudo cp /etc/passwd /etc/passwd.bak
-sudo sed -i -e "s_/bin/bash_/bin/zsh_" /etc/passwd
+if ! type "$zsh" > /dev/null; then
+    sudo cp /etc/passwd /etc/passwd.bak
+    sudo sed -i -e "s_/bin/bash_/bin/zsh_" /etc/passwd
+fi
 
 mkdir -p ~/.config/nvim
 mv -f ~/.config/nvim/init.vim ~/.config/nvim/init.vim.bak
@@ -49,7 +52,7 @@ mkdir -p ~/.ssh
 mv -f ~/.ssh/config ~/.ssh/config.bak
 cp "./~/.ssh/config" ~/.ssh/config
 
-if [[ "$OSTYPE == "darwin*"" ]]; then
+if [[ $OSTYPE == darwin* ]]; then
     mkdir -p ~/.config/iterm2
     mv -f ~/.config/iterm2/com.googlecode.iterm2.plist ~/.config/iterm2/com.googlecode.iterm2.plist.bak
     cp "./~/.config/iterm2/com.googlecode.iterm2.plist" ~/.config/iterm2/com.googlecode.iterm2.plist
