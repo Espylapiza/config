@@ -27,7 +27,7 @@ fi
 $INSTALL_COMMAND curl git neovim zsh ripgrep
 
 if type "zsh" > /dev/null; then
-    mv -f ~/.oh-my-zsh ~/.oh-my-zsh.bak
+    mv -f ~/.oh-my-zsh{,.bak}
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
