@@ -170,7 +170,7 @@ export LC_ALL="en_US.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --hidden --no-ignore --files"
 export EDITOR="nvim"
 
-if [[ "$OSTYPE == "darwin*"" ]]; then
+if [[ $OSTYPE == darwin* ]]; then
     alias locate="mdfind -name"
     export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
     export HOMEBREW_NO_AUTO_UPDATE=1
